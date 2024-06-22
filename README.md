@@ -1,6 +1,6 @@
 # Angular Calendar Component
 
-** Please note: this repository is not updated anymore. Feel free to contribute, fork the repository and submit a pull request.**
+**Please note: this repository is not updated anymore. Feel free to contribute, fork the repository and submit a pull request.**
 
 This component displays a calendar in your Angular (Material) project.
 
