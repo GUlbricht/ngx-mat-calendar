@@ -1,4 +1,4 @@
-import { CalendarEvent } from 'projects/ngx-mat-calendar/src/public-api';
+import { CalendarEvent } from "ngx-mat-calendar";
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 

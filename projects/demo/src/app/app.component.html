@@ -1,82 +1,76 @@
 <div class="container">
-    <mat-card class="toolbar">
-        <div>Demo toolbar</div>
+  <mat-card class="toolbar">
+    <div>Demo toolbar</div>
 
-        <div class="toolbar__content">
-            <button
-                mat-stroked-button
-                matTooltip="Change the calendar date from the parent component"
-                color="primary"
-                (click)="changeDateFromParent()">
-                Change date
-            </button>
+    <div class="toolbar__content">
+      <button
+        mat-stroked-button
+        matTooltip="Change the calendar date from the parent component"
+        color="primary"
+        (click)="changeDateFromParent()"
+      >
+        Change date
+      </button>
 
-            <mat-checkbox
-                class="toolbar__checkbox"
-                matTooltip="Enable/disable compact view for day and week view"
-                [checked]="compact"
-                (change)="onCompactChange()">
-                Compact
-            </mat-checkbox>
+      <mat-checkbox
+        class="toolbar__checkbox"
+        matTooltip="Enable/disable compact view for day and week view"
+        [checked]="compact"
+        (change)="onCompactChange()"
+      >
+        Compact
+      </mat-checkbox>
 
-            <mat-checkbox
-                class="toolbar__checkbox"
-                matTooltip="Enable/disable the add button"
-                [checked]="addButton"
-                (change)="onAddButtonChange()">
-                Add button
-            </mat-checkbox>
+      <mat-checkbox
+        class="toolbar__checkbox"
+        matTooltip="Enable/disable the add button"
+        [checked]="addButton"
+        (change)="onAddButtonChange()"
+      >
+        Add button
+      </mat-checkbox>
 
-            <mat-checkbox
-                class="toolbar__checkbox"
-                matTooltip="Enable/disable the toggle to change to day/week/month view"
-                [checked]="viewToggle"
-                (change)="onViewToggleChange()">
-                View toggle
-            </mat-checkbox>
+      <mat-checkbox
+        class="toolbar__checkbox"
+        matTooltip="Enable/disable the toggle to change to day/week/month view"
+        [checked]="viewToggle"
+        (change)="onViewToggleChange()"
+      >
+        View toggle
+      </mat-checkbox>
 
-            <mat-checkbox
-                class="toolbar__checkbox"
-                matTooltip="Enable/disable the date picker in the calendar"
-                [checked]="enableDatePickerButton"
-                (change)="onDatePickerButtonChange()">
-                Datepicker
-            </mat-checkbox>
+      <mat-checkbox
+        class="toolbar__checkbox"
+        matTooltip="Enable/disable the date picker in the calendar"
+        [checked]="enableDatePickerButton"
+        (change)="onDatePickerButtonChange()"
+      >
+        Datepicker
+      </mat-checkbox>
 
-            <mat-checkbox
-                class="toolbar__checkbox"
-                matTooltip="Enable/disable custom component to render the month view"
-                [checked]="enableCustomMonthViewComponent"
-                (change)="onCustomMonthViewComponentButtonChange()">
-                Custom Month View
-            </mat-checkbox>
+      <mat-checkbox
+        class="toolbar__checkbox"
+        matTooltip="Enable/disable custom component to render the month view"
+        [checked]="enableCustomMonthViewComponent"
+        (change)="onCustomMonthViewComponentButtonChange()"
+      >
+        Custom Month View
+      </mat-checkbox>
 
-            <mat-form-field
-                appearance="outline"
-                matTooltip="Change the Material Theme of the app"
-                class="toolbar__theme-switch">
-                <mat-select
-                    [value]="selectedTheme"
-                    (selectionChange)="onThemeChange(theme.value)"
-                    #theme>
-                    <mat-option value="theme-blue-grey">Blue Grey</mat-option>
-                    <mat-option value="theme-deep-purple">Deep Purple</mat-option>
-                    <mat-option value="theme-indigo-pink">Indigo Pink</mat-option>                    
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </mat-card>
+    </div>
+  </mat-card>
 
-    <mat-card>
-        <mat-card-content>
-            <ngx-mat-calendar
-                [options]="calendarOptions"
-                [events]="events"
-                [selectedDate]="date"
-                (eventClick)="handleEventClick($event)"
-                (dateChange)="handleDateChange($event)"
-                (addButtonClick)="handleAddButtonClick()">
-            </ngx-mat-calendar>
-        </mat-card-content>
-    </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <ngx-mat-calendar
+        [options]="calendarOptions"
+        [events]="events"
+        [selectedDate]="date"
+        (eventClick)="handleEventClick($event)"
+        (dateChange)="handleDateChange($event)"
+        (addButtonClick)="handleAddButtonClick()"
+      >
+      </ngx-mat-calendar>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -1,14 +1,9 @@
 <div *ngIf="event" class="event">
-    <div
-        class="event__line"
-        [matTooltip]="eventTooltip"
-        [ngStyle]="{'backgroundColor' : event.allDay ? event.color : '' }"
-        [class.all-day]="event.allDay"
-        [class.past-event]="isPastEvent()">
-        <span class="event-color" *ngIf="!event.allDay" [style.backgroundColor]="event.color"></span>
-        <p class="metadata" *ngIf="!event.allDay">{{ startTime }}</p>
-        <p class="title">{{ event.title }}</p>
-    </div>
+  <div class="event__line" [matTooltip]="eventTooltip" [ngStyle]="{'backgroundColor' : event.allDay || (!startsToday && !endsToday) ? event.color : '' }" [class.all-day]="event.allDay && (startsToday || endsToday)" [class.past-event]="isPastEvent()">
+    <span class="event-color" *ngIf="!event.allDay && (startsToday || endsToday)" [style.backgroundColor]="event.color"></span>
+    <p class="metadata" *ngIf="!event.allDay && (startsToday || endsToday)">{{ startsToday ? startTime : '- ' + endTime }}</p>
+    <p class="title">{{ event.title }}</p>
+  </div>
 
-    <div class="event__multiday" *ngIf="!isSameDay && !endsToday"></div>
+  <div class="event__multiday" *ngIf="!isSameDay && !endsToday"></div>
 </div>

@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewBaseComponent } from '../shared/view-base/view-base.component';
 import { DayView } from '../../models/Calendar';
 import { CalendarEvent } from '../../models/CalendarEvent';
 import { FormattingService } from '../../services/formatting.service';
 import { tap } from 'rxjs/operators';
 import { CalendarDay } from '../../models/CalendarDay';
+import { CommonModule } from '@angular/common';
+import { EventDisplayComponent } from '../shared/event-display/event-display.component';
+import { ViewBaseComponent } from '../shared/view-base/view-base.component';
+import { AllDayEventPipe } from '../../pipes/all-day-event.pipe';
 
 @Component({
     selector: 'day-view',
+    standalone: true,
+    imports: [CommonModule, EventDisplayComponent, AllDayEventPipe],
     templateUrl: './day-view.component.html',
     styleUrls: ['./day-view.component.scss']
 })
@@ -20,7 +25,7 @@ export class DayViewComponent extends ViewBaseComponent implements OnInit {
         super(formattingService);
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
         super.ngOnInit();
         this.generateView();
 

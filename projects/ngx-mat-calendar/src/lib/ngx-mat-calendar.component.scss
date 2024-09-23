@@ -26,7 +26,7 @@ month-view {
 
 .calendar__toolbar {
     display: flex;
-    flex-direction: row;  
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     margin-bottom: $margin-md;
@@ -95,11 +95,11 @@ month-view {
         position: absolute;
         right: 60px;
 
-        .mat-form-field {
+        .mat-mdc-form-field {
             font-size: 12px;
         }
 
-        .mat-form-field-wrapper {
+        .mat-mdc-form-field-wrapper {
             padding-bottom: 0;
         }
     }
@@ -108,17 +108,17 @@ month-view {
         margin-left: $margin-md;
         align-items: center;
 
-        .mat-form-field-wrapper {
+        .mat-mdc-form-field-wrapper {
             margin: 0;
             padding: 0;
         }
 
-        .mat-form-field-infix {
+        .mat-mdc-form-field-infix {
             padding: $margin-xxs 0 $margin-xs 0;
             width: 90px;
         }
 
-        .mat-select-arrow {
+        .mat-mdc-select-arrow {
             margin-top: $margin-xxs;
         }
     }

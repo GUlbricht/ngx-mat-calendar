@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { areIntervalsOverlapping, endOfDay, getHours, getMinutes, intervalToDuration, isSameDay, startOfDay } from 'date-fns';
+import { areIntervalsOverlapping, endOfDay, getHours, getMinutes, intervalToDuration, isAfter, isBefore, isSameDay, startOfDay } from 'date-fns';
 import { CalendarDay } from '../../../models/CalendarDay';
 import { CalendarEvent, CalendarEventGrid } from '../../../models/CalendarEvent';
-import { v4 as uuidv4 } from 'uuid';
 import { CalendarOptions } from '../../../models/CalendarOptions';
-import { hoursOfDay } from '../../../models/Times';
+import { hoursOfDay, Times } from '../../../models/Times';
 import { FormattingService } from '../../../services/formatting.service';
 import { interval, Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -17,8 +16,8 @@ export abstract class ViewBaseComponent implements OnInit, OnDestroy {
     @Input() events$: Observable<CalendarEvent[]>;
     @Input() selectedDate$: Observable<Date>;
 
-    @Output() eventClick: EventEmitter<CalendarEvent> = new EventEmitter();
-    @Output() changeToDayView: EventEmitter<Date> = new EventEmitter();
+    @Output() eventClick = new EventEmitter<CalendarEvent>();
+    @Output() changeToDayView = new EventEmitter<Date>();
 
     protected subscriptions$: Subscription = new Subscription();
     public markerPosition = 0;
@@ -67,7 +66,7 @@ export abstract class ViewBaseComponent implements OnInit, OnDestroy {
 
     protected createEventGroups(day: CalendarDay): CalendarDay {
         day.events.map((event: CalendarEvent) => {
-            const uuid = uuidv4();
+            const uuid = crypto.randomUUID();
             let eventGroup: CalendarEvent[] = [];
 
             if (event.grid) {
@@ -179,7 +178,7 @@ export abstract class ViewBaseComponent implements OnInit, OnDestroy {
         return grid;
     }
 
-    public getCellHeight(time: any): number {
+    public getCellHeight(time: Times): number {
         if (time.isEnd) {
             return 20;
         }
@@ -227,7 +226,9 @@ export abstract class ViewBaseComponent implements OnInit, OnDestroy {
     }
 
     protected isSameDay(date: Date, startTime: Date, endTime: Date): boolean {
-        return isSameDay(new Date(date), new Date(startTime)) || isSameDay(new Date(date), new Date(endTime));
+      return (
+        isSameDay(new Date(date), new Date(startTime)) || isSameDay(new Date(date), new Date(endTime)) || (isAfter(new Date(date), new Date(startTime)) && isBefore(new Date(date), new Date(endTime)))
+      );
     }
 
     ngOnDestroy(): void {

@@ -1,25 +1,25 @@
-import { Component, Input, OnDestroy, OnInit, Type, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ComponentRef, Input, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
 import { CalendarEvent } from '../../../models/CalendarEvent';
 import { DisplayComponent } from '../../../models/DisplayComponent';
-import { EventRenderBaseComponent } from '../event-render/event-render-base.component';
 import { EventDisplayDirective } from './event-display.directive';
+import { EventRenderBaseComponent } from '../event-render/event-render-base.component';
 
 @Component({
     selector: 'event-display',
+    standalone: true,
+    imports: [EventDisplayDirective],
     template: `<ng-template eventDisplay></ng-template>`,
-    styleUrls: ['./event-display.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./event-display.component.scss']
 })
 export class EventDisplayComponent implements OnInit, OnDestroy {
     @Input() event: CalendarEvent;
     @Input() date: Date;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Input() component: any;
 
-    componentRef: any;
+    componentRef: ComponentRef<DisplayComponent>;
 
     @ViewChild(EventDisplayDirective, { static: true }) eventDisplayTarget!: EventDisplayDirective;
-
-    constructor() {}
 
     ngOnInit(): void {
         if (this.event && !this.componentRef) {
@@ -28,8 +28,7 @@ export class EventDisplayComponent implements OnInit, OnDestroy {
     }
 
     private componentTypeFactory(): Type<DisplayComponent> {
-        let comp: Type<DisplayComponent>;
-        comp = this.component;
+        const comp: Type<DisplayComponent> = this.component;
         return comp;
     }
 

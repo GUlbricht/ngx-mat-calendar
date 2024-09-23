@@ -1,107 +1,114 @@
-import { Component, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  CalendarEvent,
+  CalendarOptions,
+  NgxMatCalendarComponent,
+} from 'ngx-mat-calendar';
 import { add } from 'date-fns';
-import { CalendarEvent } from 'projects/ngx-mat-calendar/src/lib/models/CalendarEvent';
-import { CalendarOptions } from 'projects/ngx-mat-calendar/src/lib/models/CalendarOptions';
-import { EventRenderMonthComponent } from './component/event-render-month/event-render-month.component';
-import { Themes } from './models/Themes';
 import { EventService } from './services/event.service';
+import { CustomEventRenderMonthComponent } from './component/event-render-month/event-render-month.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    NgxMatCalendarComponent,
+    MatButtonModule,
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-    events: CalendarEvent[];
-    calendarOptions = new CalendarOptions();
-    date = new Date();
+  events: CalendarEvent[];
+  calendarOptions = new CalendarOptions();
+  date = new Date();
 
-    selectedTheme: Themes = 'theme-blue-grey';
-    compact = false;
-    addButton = true;
-    viewToggle = true;
-    enableDatePickerButton = true;
-    enableCustomMonthViewComponent = false;
+  compact = false;
+  addButton = false;
+  viewToggle = true;
+  enableDatePickerButton = true;
+  enableCustomMonthViewComponent = false;
 
-    constructor(
-        private eventService: EventService,
-        private renderer: Renderer2
-    ) {}
+  constructor(
+    private eventService: EventService,
+    private renderer: Renderer2
+  ) {}
 
-    ngOnInit(): void {
-        this.initCalendar();
+  ngOnInit(): void {
+    this.initCalendar();
+  }
+
+  initCalendar(): void {
+    this.calendarOptions = new CalendarOptions({
+      compact: this.compact,
+      enableAddEventButton: this.addButton,
+      enableViewToggle: this.viewToggle,
+      enableDatePickerButton: this.enableDatePickerButton,
+    });
+
+    if (this.enableCustomMonthViewComponent) {
+      this.calendarOptions.renderComponent.month = CustomEventRenderMonthComponent;
     }
 
-    initCalendar(): void {
-        this.calendarOptions = new CalendarOptions({
-            compact: this.compact,
-            enableAddEventButton: this.addButton,
-            enableViewToggle: this.viewToggle,
-            enableDatePickerButton: this.enableDatePickerButton
-        });
+    this.getEvents(this.date);
+  }
 
-        if (this.enableCustomMonthViewComponent) {
-            this.calendarOptions.renderComponent.month = EventRenderMonthComponent;
-        }
+  getEvents(date: Date): void {
+    this.eventService.getEvents(date).subscribe((events: CalendarEvent[]) => {
+      this.events = events;
+    });
+  }
 
-        this.getEvents(this.date);
-    }
+  changeDateFromParent(): void {
+    this.date = add(this.date, { months: 1 });
+  }
 
-    getEvents(date: Date): void {
-        this.eventService.getEvents(date).subscribe(events => {
-            this.events = events;
-        });
-    }
+  onCompactChange(): void {
+    this.compact = !this.compact;
+    this.initCalendar();
+  }
 
-    changeDateFromParent(): void {
-        this.date = add(this.date, { months: 1 });
-    }
+  onAddButtonChange(): void {
+    this.addButton = !this.addButton;
+    this.initCalendar();
+  }
 
-    onCompactChange(): void {
-        this.compact = !this.compact;
-        this.initCalendar();
-    }
+  onViewToggleChange(): void {
+    this.viewToggle = !this.viewToggle;
+    this.initCalendar();
+  }
 
-    onAddButtonChange(): void {
-        this.addButton = !this.addButton;
-        this.initCalendar();
-    }
+  onDatePickerButtonChange(): void {
+    this.enableDatePickerButton = !this.enableDatePickerButton;
+    this.initCalendar();
+  }
 
-    onViewToggleChange(): void {
-        this.viewToggle = !this.viewToggle;
-        this.initCalendar();
-    }
+  onCustomMonthViewComponentButtonChange(): void {
+    this.enableCustomMonthViewComponent = !this.enableCustomMonthViewComponent;
+    this.initCalendar();
+  }
 
-    onDatePickerButtonChange(): void {
-        this.enableDatePickerButton = !this.enableDatePickerButton;
-        this.initCalendar();
-    }
+  handleDateChange(date: Date): void {
+    this.date = date;
+    this.getEvents(date);
+  }
 
-    onCustomMonthViewComponentButtonChange(): void {
-        this.enableCustomMonthViewComponent = !this.enableCustomMonthViewComponent;
-        this.initCalendar();
-    }
+  handleEventClick(event: CalendarEvent): void {
+    console.log(event);
+  }
 
-    onThemeChange(theme: Themes): void {
-        if (this.selectedTheme) {
-            this.renderer.removeClass(document.body, this.selectedTheme);
-        }
-
-        this.renderer.addClass(document.body, theme);
-        this.selectedTheme = theme;
-    }
-
-    handleDateChange(date: Date): void {
-        this.date = date;
-        this.getEvents(date);
-    }
-
-    handleEventClick(event: CalendarEvent): void {
-        console.log(event);
-    }
-
-    handleAddButtonClick(): void {
-        console.log('Add button clicked!');
-    }
+  handleAddButtonClick(): void {
+    console.log('Add button clicked!');
+  }
 }

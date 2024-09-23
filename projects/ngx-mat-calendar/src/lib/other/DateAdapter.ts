@@ -3,7 +3,7 @@ import { NativeDateAdapter } from '@angular/material/core';
 
 @Injectable()
 export class LocaleDateAdapter extends NativeDateAdapter {
-    getFirstDayOfWeek(): number {
+    override getFirstDayOfWeek(): number {
         return 1;
     }
 }

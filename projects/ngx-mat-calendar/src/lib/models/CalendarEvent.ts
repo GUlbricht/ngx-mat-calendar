@@ -7,7 +7,7 @@ export class CalendarEvent {
     endTime: Date;
     allDay?: boolean = false;
 
-    color?: any = colors.grey;
+    color?: string = colors.grey;
     grid?: CalendarEventGrid = new CalendarEventGrid();
     location?: string;
 

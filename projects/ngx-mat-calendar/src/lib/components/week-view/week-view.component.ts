@@ -6,9 +6,14 @@ import { CalendarEvent } from '../../models/CalendarEvent';
 import { FormattingService } from '../../services/formatting.service';
 import { tap } from 'rxjs/operators';
 import { CalendarDay } from '../../models/CalendarDay';
+import { CommonModule } from '@angular/common';
+import { EventDisplayComponent } from '../shared/event-display/event-display.component';
+import { AllDayEventPipe } from '../../pipes/all-day-event.pipe';
 
 @Component({
     selector: 'week-view',
+    standalone: true,
+    imports: [CommonModule, EventDisplayComponent, AllDayEventPipe],
     templateUrl: './week-view.component.html',
     styleUrls: ['./week-view.component.scss']
 })
@@ -21,7 +26,7 @@ export class WeekViewComponent extends ViewBaseComponent implements OnInit {
         super(formattingService);
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
         super.ngOnInit();
         this.generateView();
 

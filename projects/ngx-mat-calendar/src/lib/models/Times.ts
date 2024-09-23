@@ -1,4 +1,4 @@
-export const hoursOfDay = [
+export const hoursOfDay: Times[] = [
     { title: '00:00' },
     { title: '01:00' },
     { title: '02:00' },
@@ -26,7 +26,7 @@ export const hoursOfDay = [
     { title: '00:00', isEnd: true }
 ];
 
-export const daysOfWeek = [
+export const daysOfWeek: Times[] = [
     { title: 'Mon' },
     { title: 'Tue' },
     { title: 'Wed' },
@@ -40,4 +40,9 @@ export enum Periods {
     day = 'days',
     week = 'weeks',
     month = 'months'
+}
+
+export interface Times {
+  title: string;
+  isEnd?: boolean;
 }
