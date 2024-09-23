@@ -1,5 +1,7 @@
 # Changelog
 
+### 23-09-2024 - 0.1.0
+
 ### 14-04-2022 - 0.0.54
 - Add keyboard shortcuts for navigating to next and previous period
 
